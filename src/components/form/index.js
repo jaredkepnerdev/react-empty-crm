@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Form as AntdForm, Row, Col } from 'antd';
+import classNames from 'classnames';
 import BaseFormElement from './BaseFormElement';
 import FormStore from './FormStore';
 import TextInput from './TextInput';
@@ -80,8 +81,9 @@ class Form extends React.Component {
     render() {
         const props = {...this.props};
         delete props['children'];
+        delete props['className'];
         return (
-            <AntdForm className="form" ref="form" {...props}>
+            <AntdForm className={classNames(this.props.className, 'form')} ref="form" {...props}>
                 {
                     React.Children.map(this.props.children, function(child) {
                         if (!child) return null;
@@ -126,32 +128,30 @@ class FormGroupColumn extends React.Component {
     render() {
         let size = this.props.size;
         if (typeof size == 'number') {
-            size = { sm:size, md:size, lg:size };
+            size = { sm:{ span:size }, md:{ span:size }, lg:{ span:size }, xs:{ span:size } };
         }
         size = size || {};
         return (
-            <Col className={`${this.props.className || ''}`} style={this.props.style} >
-                <AntdForm.Item>
-                    {
-                        React.Children.map(this.props.children, function(child) {
-                            if (!child) return null;
-                            let form = this.props.form;
-                            let injectProps = { validator:this.props.validator };
-                            if (form) injectProps.form = form;
-                            if ((BaseFormElement.isInstance(child) || AsyncElementWrapper.isInstance(child)) && form) {
-                                //inject value from store
-                                let store = form.getStore();
-                                if (store) {
-                                    let value = store.getFieldValue(child.props.name);
-                                    if (value != null && value != undefined) {
-                                        injectProps.value = value;
-                                    }
+            <Col className={`${this.props.className || ''}`} style={this.props.style} {...size} >
+                {
+                    React.Children.map(this.props.children, function(child) {
+                        if (!child) return null;
+                        let form = this.props.form;
+                        let injectProps = { validator:this.props.validator };
+                        if (form) injectProps.form = form;
+                        if ((BaseFormElement.isInstance(child) || AsyncElementWrapper.isInstance(child)) && form) {
+                            //inject value from store
+                            let store = form.getStore();
+                            if (store) {
+                                let value = store.getFieldValue(child.props.name);
+                                if (value != null && value != undefined) {
+                                    injectProps.value = value;
                                 }
                             }
-                            return React.cloneElement(child, injectProps);
-                        }.bind(this))
-                    }
-                </AntdForm.Item>
+                        }
+                        return React.cloneElement(child, injectProps);
+                    }.bind(this))
+                }
             </Col>
         );
     }
@@ -164,6 +164,7 @@ class FormGroup extends React.Component {
         const props = {...this.props};
         delete props['children'];
         delete props['style'];
+        delete props['className'];
 
         const style = this.props.style;
         const className = 'form-group ' + (this.props.className || '');
@@ -185,13 +186,15 @@ class FormGroup extends React.Component {
         
         return (
             <Row className={className} style={style}>
-                <FormGroupColumn {...props} size={props.size || 12}>
+                <FormGroupColumn {...props} size={props.size || 24}>
                     {children}
                 </FormGroupColumn>
             </Row>
         );
     }
 }
+
+FormGroup.Item = AntdForm.Item;
 
 export {
     FormStore,

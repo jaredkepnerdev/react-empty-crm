@@ -1,5 +1,4 @@
 import React from 'react';
-import { Spin, Icon } from 'antd';
 
 class AsyncElementWrapper extends React.Component {
     constructor(props) {
@@ -34,14 +33,14 @@ class AsyncElementWrapper extends React.Component {
                     React.Children.map(this.props.children, function(child) {
                         if (!child) return null;
                         if (props.label) withLabel = true;
-                        return React.cloneElement(child, {...props});
+                        return this.state.loading ? React.cloneElement(child, {...props, hasFeedback:true, validateStatus:'validating' }) : React.cloneElement(child, {...props });
                     }.bind(this))
                 }
-                {
+                {/* {
                     this.state.loading ? 
                     <Spin indicator={<Icon type="loading" style={{ fontSize: 16 }} spin />} /> : 
                     null
-                }
+                } */}
             </div>
         );
     }

@@ -4,26 +4,21 @@ import { Menu, Dropdown, Button, Icon } from 'antd';
 
 class Select extends BaseFormElement {
     constructor(props) {
-        super(props);        
-
+        super(props);
+        const option = this.value ? this.getItemByKey(this.value) : null;
         this.state = {
-            value: props.value || this.props.defaultValue
+            ...this.state,
+            selectedOption: option
         };
-    }
-
-    componentWillReceiveProps(newProps) {
-        this.setState({
-            value: newProps.value
-        });
     }
 
     renderMenu() {
         const { options } = this.props;
         return (
-            <Menu onClick={handleMenuClick}>
+            <Menu onClick={this.onChange.bind(this)}>
             {
-                (options || []).map(option => {
-                    return <Menu.Item key={option.key}>
+                (options || []).map((option, index) => {
+                    return <Menu.Item key={index}>
                                 { option.icon ? <Icon type={option.icon} /> : null }
                                 {option.text}
                             </Menu.Item>;
@@ -42,36 +37,34 @@ class Select extends BaseFormElement {
         return null;
     }
 
-    changeSelection(item) {
-        this.props.onChanged && this.props.onChanged(item);
-        this.onChanged(item.key);
-        setTimeout(() => this.detectHandler && this.detectHandler(this), 0);
-    }
-    
-    getValue() {
-        return this.state.value;
-    }
-
-    get value() {
-        return this.state.value;
-    }
-    
-    render() {
-        const { value } = this.state;
-        let selectedOption;
-        if (value != null && value != undefined) {
-            selectedOption = this.getItemByKey(value);
+    onChange(e) {
+        const option = (this.props.options || [])[Number(e.key)];
+        this.notifyChanged(option.key);
+        if (this.props.onChange) {
+            this.props.onChange(option.value, () => {
+                this.setState({
+                    selectedOption: option
+                });
+            });
+        } else {
+            this.setState({
+                selectedOption: option
+            });
         }
+    }
+    
+    renderElement() {
+        const { selectedOption } = this.state;
         return (
-            <Dropdown ref="element" {...this.props} {...this.getInjectProps()}
-                      overlay={this.renderMenu()}
-                      onChange={ this.changeSelection.bind(this) } >
+            <Dropdown ref="element" name={this.getFieldName()}
+                      overlay={this.renderMenu()} 
+                      disabled={this.props.disabled} >
                 <Button style={{ marginLeft: 8 }}>
                     {
                         selectedOption ? 
-                        <div>
+                        <span>
                             { selectedOption.icon ? <Icon type={selectedOption.icon} /> : null } {selectedOption.text}
-                        </div> : 
+                        </span> : 
                         ''
                     } <Icon type="down" />
                 </Button>

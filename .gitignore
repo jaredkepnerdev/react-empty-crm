@@ -64,3 +64,5 @@ yarn.lock
 .idea
 
 up_all.sh
+
+/dist

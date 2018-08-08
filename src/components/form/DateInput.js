@@ -6,40 +6,26 @@ import { DatePicker as AntdDatePicker } from 'antd';
 class DateInput extends BaseFormElement {
     constructor(props) {
         super(props);
-        this.state = {
-            value: props.value || 0
-        };
     }
 
-    componentWillReceiveProps(newProps) {
-        this.setState({
-            value: newProps.value || 0
-        });
-    }
-
-    changeDate(date) {
-        this.props.onChanged && this.props.onChanged(date);
-        this.onChanged(date.getTime());
+    onChange(date) {
+        const timestamp = date.unix() * 1000;
+        this.props.onChange && this.props.onChange(timestamp);
+        this.notifyChanged(timestamp);
         setTimeout(() => this.detectHandler && this.detectHandler(this), 0);
     }
     
-    getValue() {
-        return this.state.value ? this.state.value.unix() : 0;
-    }
-
-    get value() {
-        return this.state.value ? this.state.value.unix() : 0;
-    }
-    
-    render() {
+    renderElement() {
         let val = this.getValue();
         return (
             <AntdDatePicker ref="element"
                       {...this.props} {...this.getInjectProps()}
                       value={val ? moment(val) : undefined}
                       format={this.props.format || 'YYYY-MM-DD'}
-                      onBlur={()=>this.detectHandler && this.detectHandler(this)}
-                      onChange={ this.changeDate.bind(this) }
+                      disabled={this.props.disabled}
+                      mode={this.props.mode}
+                      showTime={this.props.showTime}
+                      onChange={ this.onChange.bind(this) }
                       />
         );
     }

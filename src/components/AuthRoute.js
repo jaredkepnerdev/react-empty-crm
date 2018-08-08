@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import { callAPI } from '../utils/service';
-
 class AuthRoute extends React.Component {
     constructor(props) {
         super(props);

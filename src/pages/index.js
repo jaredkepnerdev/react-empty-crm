@@ -4,7 +4,8 @@ let COMMON_ROUTER_MAP = {
 
 let ALL_ROUTER_MAP = {
     'default':{
-        '/dashboard': () => import('./subpages/Dashboard')
+        '/dashboard': () => import('./subpages/Dashboard'),
+        '/table': () => import('./subpages/DemoTablePage')
     }
 };
 
@@ -15,7 +16,7 @@ export const SubPages = [];
 export const WHITE_LIST = {};
 (function() {
     var tmp = [
-        "/", "/login", "/404", "/no_permission", "/about", "/dashboard"
+        "/", "/login", "/404", "/no_permission", "/about"
     ];
     tmp.forEach(function(page) {
         WHITE_LIST[page] = true;

@@ -15,7 +15,6 @@ module.exports = {
             'number-precision',
             'lodash/get', 'lodash/set', 'lodash/groupBy', 'lodash/orderBy', 'lodash/remove',
             path.resolve(consts.paths.src, 'components/DynamicComponent'),
-            path.resolve(consts.paths.src, 'utils/service'),
         ]
     },
     resolve: {

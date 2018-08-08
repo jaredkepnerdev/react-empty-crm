@@ -25,6 +25,7 @@ class FormStore {
     }
 
     getFieldValue(name) {
+        if (!name) return null;
         return this.data[name];
     }
 

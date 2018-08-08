@@ -9,7 +9,7 @@ class Switch extends BaseFormElement {
     
     render() {
         return (
-            <AntdSwitch ref="element" {...this.props} {...this.getInjectProps()} defaultChecked={this.props.value} />
+            <AntdSwitch ref="element" {...this.props} {...this.getInjectProps()} checked={this.props.value} defaultChecked={this.props.value} />
         );
     }
 }

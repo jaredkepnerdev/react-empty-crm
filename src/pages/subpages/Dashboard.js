@@ -1,7 +1,12 @@
 import React from 'react';
 import BasePage from './BasePage';
 import { Icon } from 'antd';
-import { Form, FormGroup, TextInput, Button } from "../../components/form";
+import { 
+    Form, FormGroup, 
+    TextInput, 
+    Button, 
+    Switch 
+} from "../../components/form";
 
 class Dashboard extends BasePage {
 
@@ -17,6 +22,9 @@ class Dashboard extends BasePage {
                     </FormGroup>
                     <FormGroup>
                         <TextInput prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Switch value={true} />
                     </FormGroup>
                     <FormGroup>
                         <Button primary >Log in</Button>

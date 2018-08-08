@@ -3,6 +3,9 @@ import React from 'react';
 class BaseFormElement extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            value: null
+        };
     }
 
     getInjectProps() {
@@ -71,11 +74,12 @@ class BaseFormElement extends React.Component {
     }
     
     getValue() {
-        return this.refs.element.value;
+        console.log(1);
+        return this.getFieldName() ? this.getStoreValue() : this.state.value;
     }
 
     get value() {
-        return this.refs.element.value;
+        return this.getValue();
     }
 
     static isInstance(obj) {

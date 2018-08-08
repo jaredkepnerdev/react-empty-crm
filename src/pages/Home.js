@@ -44,7 +44,7 @@ class Home extends React.Component {
         return (
             <Layout className={s.page}>
                 <LeftSide role={role} menu={menu} collapsed={collapsed} {...this.props} />
-                <Layout>
+                <Layout className={collapsed ? s.contentCollapsed : s.content}>
                     <AppHeader role={role} collapsed={collapsed} {...this.props} toggle={this.toggle.bind(this)} />
                     <ContentContainer role={role} {...this.props} url={window.location.pathname} />
                 </Layout>

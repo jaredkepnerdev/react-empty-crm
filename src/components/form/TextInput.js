@@ -6,12 +6,12 @@ class TextInput extends BaseFormElement {
     constructor(props) {
         super(props); 
         this.state = {
-            value: this.getStoreValue() || ''
+            value: this.getValue()
         };
     }
 
     componentWillReceiveProps(newProps) {
-        let value = this.getStoreValue() || '';
+        let value = this.getValue();
         this.setState({
             value: value
         });
@@ -26,17 +26,16 @@ class TextInput extends BaseFormElement {
         if (this.props.onChanged) {
             this.props.onChanged(value, () => {
                 this.setState({
-                    value: this.getStoreValue() || ''
+                    value: this.getValue()
                 });
             });
         }
     }
     
     render() {
-        console.log(this.props);
-        console.log(this.getInjectProps());
+        console.log(this.element);
         return (
-            <Input ref="element" value={this.state.value} {...this.props} {...this.getInjectProps()}  />
+            <Input ref={ref => { if (ref) this.element = ref; } } {...this.props} {...this.getInjectProps()} />
         );
     }
 }

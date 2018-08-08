@@ -5,6 +5,7 @@ import { init as pageMapInit, Home, Login, About, NotFound, NoPermission, SubPag
 import AuthRoute from './components/AuthRoute';
 import Model from './model/Model';
 import { callAPI } from './utils/service';
+import FullPageLoading from './components/FullPageLoading';
 
 import './App.scss';
 
@@ -38,7 +39,7 @@ class PagePlaceHolder extends React.Component {
             console.log('no permission...')
             return <Redirect to={'/login'}/>;
         }
-        return <div>Loading...</div>;
+        return <FullPageLoading />;
     }
 }
 

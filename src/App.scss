@@ -1,5 +1,26 @@
 @import '~antd/dist/antd.css';
 
+$color-primary: #1890ff;
+
+$border-default: 1px solid #ebedf0;
+$border-primary: 1px solid #1890ff;
+
+%border-primary {
+    border: $border-primary;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
 .page {
     height: 100vh;
+}
+
+.content {
+    margin-left: 200px;
+    transition: all 0.2s;
+}
+
+.contentCollapsed {
+    margin-left: 80px;
+    transition: all 0.2s;
 }

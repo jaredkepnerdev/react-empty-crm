@@ -399,6 +399,8 @@ export class FormValidator {
         } else {
             input = evt;
         }
+        if (!input) return;
+        input.validate(null);
         let value = input.getValue ? input.getValue() : null;
         this.checkInput(input, value, (err) => {
             input.validate(err);

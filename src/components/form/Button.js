@@ -25,7 +25,7 @@ class Button extends React.Component {
                     this.props.form.submit();
                 }
             } else {
-                this.props.onClick();
+                this.props.onClick && this.props.onClick();
             }
         };
         return <AntdButton {...props} type={type} onClick={onClick}>{this.props.children}</AntdButton>;

@@ -11,12 +11,12 @@ const consts = require('./consts');
 module.exports = {
     entry: {
         vendor: [
-            'babel-polyfill', 'react', 'react-loadable', 'react-router-dom', 
-            'number-precision', 
-            'lodash/get', 'lodash/set', 'lodash/groupBy', 'lodash/orderBy', 'lodash/remove', 
+            'babel-polyfill', 'react', 'react-loadable', 'react-router-dom',
+            'number-precision',
+            'lodash/get', 'lodash/set', 'lodash/groupBy', 'lodash/orderBy', 'lodash/remove',
             path.resolve(consts.paths.src, 'components/DynamicComponent'),
             path.resolve(consts.paths.src, 'utils/service'),
-        ] 
+        ]
     },
     resolve: {
         extensions: [".jsx", ".react.jsx", ".json", ".js", ".css", ".less", ".scss"],
@@ -36,7 +36,7 @@ module.exports = {
                 query: {
                     presets: ['es2017', 'react', 'stage-2'],
                     plugins: [
-                        [ 'import', { libraryName:'antd', libraryDirectory: "es", style: "css" } ]
+                        ['import', { libraryName: 'antd', libraryDirectory: "es", style: "css" }]
                     ]
                 }
             },
@@ -59,19 +59,20 @@ module.exports = {
                 use: [
                     require.resolve('style-loader'),
                     {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        module: true,
-                        // so that it's somewhat readable in development
-                        // it outputs it as filename_selector_hash
-                        localIdentName: '[name]__[local]__[hash:base64:5]',
-                      },
+                        loader: require.resolve('css-loader'),
+                        options: {
+                            url: false,
+                            importLoaders: 1,
+                            module: true,
+                            // so that it's somewhat readable in development
+                            // it outputs it as filename_selector_hash
+                            localIdentName: '[name]__[local]__[hash:base64:5]',
+                        },
                     },
                     {
-                      loader: require.resolve('sass-loader'),
-                    },
-                  ],
+                        loader: require.resolve('sass-loader'),
+                    }
+                ],
                 // exclude: /node_modules/,
                 include: [
                     path.resolve(consts.paths.src, ''),
@@ -80,18 +81,24 @@ module.exports = {
             },
             {
                 test: /\.css$/, // Only .css files
-                loader: 'style-loader!css-loader',
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: true,
+                            localIdentName: '[name]__[local]__[hash:base64:5]',
+                        }
+                    }
+                ],
                 // exclude: /node_modules/,
                 include: [
-                  path.resolve(consts.paths.root, 'node_modules/antd')
+                    path.resolve(consts.paths.root, 'node_modules/antd')
                 ]
             },
             {
-              test: /\.(jpe?g|png|gif|svg)$/i,
-              loaders: [
-                  'file?hash=sha512&digest=hex&name=images/[name].[ext]',
-                  'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-              ]
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                loader: 'url-loader?limit=8192&name=/static/img/[name].[ext]?[hash]',
             }
         ]
     },

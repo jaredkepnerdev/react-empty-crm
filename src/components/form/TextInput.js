@@ -5,38 +5,35 @@ import { Input } from 'antd';
 class TextInput extends BaseFormElement {
     constructor(props) {
         super(props); 
-        this.state = {
-            value: this.getStoreValue() || ''
-        };
-    }
-
-    componentWillReceiveProps(newProps) {
-        let value = this.getStoreValue() || '';
-        this.setState({
-            value: value
-        });
     }
 
     getInputTargetSelecor() {
         return 'input';
     }
 
-    onChanged(value) {
-        super.onChanged(this.value);
-        if (this.props.onChanged) {
-            this.props.onChanged(value, () => {
+    onChange(e) {
+        const value = e.target.value;
+        this.notifyChanged(value);
+        if (this.props.onChange) {
+            this.props.onChange(value, () => {
                 this.setState({
-                    value: this.getStoreValue() || ''
+                    value: this.getValue()
                 });
             });
         }
     }
     
-    render() {
-        console.log(this.props);
-        console.log(this.getInjectProps());
+    renderElement() {
+        const { prefix, type, disabled, placeholder } = this.props;
         return (
-            <Input ref="element" value={this.state.value} {...this.props} {...this.getInjectProps()}  />
+            <Input ref="element" 
+                    name={this.getFieldName()} 
+                    prefix={prefix}
+                    type={type}
+                    disabled={disabled}
+                    placeholder={placeholder}
+                    value={this.value}
+                    onChange={this.onChange.bind(this)} />
         );
     }
 }

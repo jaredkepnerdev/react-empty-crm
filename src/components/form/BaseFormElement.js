@@ -1,17 +1,27 @@
 import React from 'react';
+import { Form as AntdForm } from 'antd';
+import classNames from 'classnames';
 
 class BaseFormElement extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            value: null
+        };
+    }
+
+    componentWillReceiveProps(newProps) {
+        // console.log(newProps);
     }
 
     getInjectProps() {
         const name = this.getFieldName();
         const store = this.getStore();
         const errors = store ? (store.errors || {}) : {};
+        const errorMessage = errors[name] || null;
         return {
-            errorMessage: errors[name],
-            onChange: this.onChanged.bind(this)
+            help: errorMessage,
+            validateStatus: errorMessage ? 'error' : this.props.validateStatus
         };
     }
     
@@ -64,18 +74,31 @@ class BaseFormElement extends React.Component {
         this.detectHandler = handler;
     }
 
-    onChanged(value) {
+    notifyChanged(value) {
         if (this.props.form) {
             this.props.form.onInputChanged(this, value);
         }
     }
+
+    renderElement() {
+        return null;
+    }
+
+    render() {
+        return <AntdForm.Item 
+                        className={classNames(this.props.className, 'form-item')}
+                        {...this.props } {...this.getInjectProps()} 
+                        name={undefined} onClick={undefined} onChange={undefined} >
+                    {this.renderElement()}
+                </AntdForm.Item>
+    }
     
     getValue() {
-        return this.refs.element.value;
+        return this.getFieldName() ? this.getStoreValue() : this.state.value;
     }
 
     get value() {
-        return this.refs.element.value;
+        return this.getValue();
     }
 
     static isInstance(obj) {

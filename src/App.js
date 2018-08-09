@@ -12,6 +12,15 @@ global.__defineGetter__('Model', function () {
     return Model;
 });
 
+//register actions
+import EasyReact from './utils/easy-react';
+import * as actions from './actions';
+
+const DataComm = EasyReact.DataComm.sharedInstance;
+for (var key in actions) {
+    DataComm.registerAction(actions[key]);
+}
+
 class PagePlaceHolder extends React.Component {
     render() {
         if (this.props.error == -1) {

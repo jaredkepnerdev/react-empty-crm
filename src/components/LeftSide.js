@@ -1,15 +1,17 @@
-import * as React from 'react';
+import React from "react";
+import EasyReact from '../utils/easy-react';
 import { Layout, Menu, Icon } from 'antd'
 const { Sider } = Layout;
 
 const s = require('./LeftSide.scss');
 
-class LeftSide extends React.Component {
+class LeftSide extends EasyReact.Component {
     constructor(props) {
         super(props);
         this.state = {
             page: props.page,
-            role: props.role
+            role: props.role,
+            collapsed: false,
         };
 
         let menuHash = {};
@@ -55,6 +57,10 @@ class LeftSide extends React.Component {
         ];
 
         this._onLinkClick = this.onLinkClick.bind(this);
+    }
+
+    componentDidMount() {
+        this.bindData('ui.leftSideMenuCollapsed', 'collapsed');
     }
 
     onLinkClick(key) {
@@ -138,6 +144,7 @@ class LeftSide extends React.Component {
     }
     
    render() {
+       const { collapsed } = this.state;
         let current = window.location.pathname;
         if (this.linkNames[current]) {
             window.currentPageName = this.linkNames[current];
@@ -147,7 +154,7 @@ class LeftSide extends React.Component {
             <Sider className={s.sider}
                     trigger={null}
                     collapsible
-                    collapsed={this.props.collapsed} >
+                    collapsed={collapsed} >
                 <div className={s.logo} />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
                     <Menu.Item key="1">

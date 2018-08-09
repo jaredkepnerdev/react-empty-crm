@@ -103,6 +103,13 @@ export const mockFetchTableData = (option) => {
                   }
             ];
             let list = [].concat(data);
+            if (option.keyword) {
+                let reg = new RegExp(option.keyword, 'imsg');
+                list = list.filter(item => {
+                    return reg.test(item.company) || reg.test(item.username) || reg.test(item.phone) || reg.test(item.cell);
+                });
+                console.log(list);
+            }
             if (option.pagination) {
                 list = list.slice(option.pagination.index * option.pagination.num, (option.pagination.index + 1) * option.pagination.num);
             }

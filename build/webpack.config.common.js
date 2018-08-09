@@ -12,8 +12,6 @@ module.exports = {
     entry: {
         vendor: [
             'babel-polyfill', 'react', 'react-loadable', 'react-router-dom',
-            'number-precision',
-            'lodash/get', 'lodash/set', 'lodash/groupBy', 'lodash/orderBy', 'lodash/remove',
             path.resolve(consts.paths.src, 'components/DynamicComponent'),
         ]
     },

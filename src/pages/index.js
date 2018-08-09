@@ -5,7 +5,8 @@ let COMMON_ROUTER_MAP = {
 let ALL_ROUTER_MAP = {
     'default':{
         '/dashboard': () => import('./subpages/Dashboard'),
-        '/table': () => import('./subpages/DemoTablePage')
+        '/table': () => import('./subpages/DemoTablePage'),
+        '/form': () => import('./subpages/DemoFormPage')
     }
 };
 

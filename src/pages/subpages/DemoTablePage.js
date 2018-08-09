@@ -37,8 +37,8 @@ class DemoTablePage extends BaseTablePage {
         };
     }
 
-    callSearchAPI() {
-        return mockFetchTableData();
+    callSearchAPI(option) {
+        return mockFetchTableData(option);
     }
 
     render() {

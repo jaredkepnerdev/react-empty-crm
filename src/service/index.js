@@ -57,7 +57,7 @@ export const callAPI = (method, params) => {
     });
 }
 
-export const mockFetchTableData = (pageIndex, pageSize) => {
+export const mockFetchTableData = (option) => {
     return new Promise(resolve => {
         setTimeout(() => {
             const data = [
@@ -102,8 +102,12 @@ export const mockFetchTableData = (pageIndex, pageSize) => {
                     "cell": "(972) 321-9594"
                   }
             ];
+            let list = [].concat(data);
+            if (option.pagination) {
+                list = list.slice(option.pagination.index * option.pagination.num, (option.pagination.index + 1) * option.pagination.num);
+            }
             resolve({
-                list: data,
+                list: list,
                 total: data.length
             });
         }, 500 + Math.random() * 1000);

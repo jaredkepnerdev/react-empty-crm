@@ -11,11 +11,12 @@ export default class BaseTablePage extends BasePage {
 
         this.state = {
             result: {
-                list: []
+                list: [],
+                total: 0,
             },
             option: {
-                curPage: params.curPage || 0,
-                perPage: params.perPage || 10,
+                page: (params.page || 1) - 1,
+                pageSize: params.pageSize || 10,
                 keyword: String(params.keyword || '')
             },
             keyword: String(params.keyword || ''),
@@ -26,8 +27,16 @@ export default class BaseTablePage extends BasePage {
     }
 
     getCommonTableProps() {
+        const { option, result } = this.state;
         return {
-            loading: this.state.loading
+            loading: this.state.loading,
+            emptyRows: 10,
+            pagination: {
+                total: result.total,
+                current: option.page + 1,
+                pageSize: option.pageSize,
+                onChange: this.onChangePage.bind(this),
+            }
         };
     }
 
@@ -43,39 +52,51 @@ export default class BaseTablePage extends BasePage {
         return res;
     }
 
-    async doSearch(refresh) {
-        let option = this.state.option || {};
-        let keyword = this.state.keyword || '';
-        let curPage = option.curPage || 0;
-        if (refresh) {
-            curPage = 0;
-            option.curPage = curPage;
-        }
-        let perPage = option.perPage || 10;
-        try {
-            let res = this.processSearchResult(await this.callSearchAPI({ ...option, keyword }));
-            let result = {
-                list: res.list || [],
-                total: res.total || 0,
-            };
-            option.keyword = keyword || '';
-            this.updatePageLink(option, {
-                result,
-                option,
-                loading: false
-            });
-        } catch (err) {
-            console.error(err);
-            this.setState({
-                option,
-                loading: false
-            });
-        }
+    doSearch(refresh) {
+        this.setState({
+            loading: true,
+        }, async () => {
+            let option = this.state.option || {};
+            let keyword = this.state.keyword || '';
+            let page = option.page || 0;
+            if (refresh) {
+                page = 0;
+                option.page = page;
+            }
+            try {
+                let pagination = {
+                    index: page,
+                    num: option.pageSize,
+                };
+                let res = this.processSearchResult(await this.callSearchAPI({ pagination, keyword }));
+                let result = {
+                    list: res.list || [],
+                    total: res.total || 0,
+                };
+                console.log('loaded...');
+                option.keyword = keyword || '';
+                this.updatePageLink({
+                    ...option,
+                    page: option.page + 1,
+                }, {
+                    result,
+                    option,
+                    loading: false
+                });
+            } catch (err) {
+                console.error(err);
+                this.setState({
+                    option,
+                    loading: false
+                });
+            }
+        });
     }
 
-    onChangePage(page) {
+    onChangePage(page, pageSize) {
         let option = this.state.option;
-        option.curPage = page - 1;
+        option.page = page - 1;
+        option.pageSize = pageSize;
         this.setState({
             option: option
         }, () => {
@@ -84,9 +105,12 @@ export default class BaseTablePage extends BasePage {
     }
 
     renderTable() {
+        const commonProps = this.getCommonTableProps();
         const tableProps = this.getTableProps();
         const { result } = this.state;
-        return <DataList ref="table" {...tableProps} 
+        return <DataList ref="table" 
+                        {...tableProps}
+                        {...commonProps} 
                         data={result.list}
                 />;
     }

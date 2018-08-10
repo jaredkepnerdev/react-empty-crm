@@ -1,15 +1,17 @@
-import * as React from 'react';
+import React from "react";
+import EasyReact from '../utils/easy-react';
 import { Layout, Menu, Icon } from 'antd'
 const { Sider } = Layout;
 
 const s = require('./LeftSide.scss');
 
-class LeftSide extends React.Component {
+class LeftSide extends EasyReact.Component {
     constructor(props) {
         super(props);
         this.state = {
             page: props.page,
-            role: props.role
+            role: props.role,
+            collapsed: false,
         };
 
         let menuHash = {};
@@ -55,6 +57,10 @@ class LeftSide extends React.Component {
         ];
 
         this._onLinkClick = this.onLinkClick.bind(this);
+    }
+
+    componentDidMount() {
+        this.bindData('ui.leftSideMenuCollapsed', 'collapsed');
     }
 
     onLinkClick(key) {
@@ -136,8 +142,13 @@ class LeftSide extends React.Component {
             }
         }
     }
+
+    onSelectMenu(item, key, selectedKeys) {
+        this.props.history.push(item.key);
+    }
     
    render() {
+       const { collapsed } = this.state;
         let current = window.location.pathname;
         if (this.linkNames[current]) {
             window.currentPageName = this.linkNames[current];
@@ -147,40 +158,23 @@ class LeftSide extends React.Component {
             <Sider className={s.sider}
                     trigger={null}
                     collapsible
-                    collapsed={this.props.collapsed} >
+                    collapsed={collapsed} >
                 <div className={s.logo} />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                    <Menu.Item key="1">
-                    <Icon type="user" />
-                    <span className="nav-text">nav 1</span>
+                <Menu theme="dark" 
+                    mode="inline" 
+                    defaultSelectedKeys={[ current ]}
+                    onSelect={this.onSelectMenu.bind(this)}>
+                    <Menu.Item key="/dashboard">
+                        <Icon type="dashboard" />
+                        <span className="nav-text">Dashboard</span>
                     </Menu.Item>
-                    <Menu.Item key="2">
-                    <Icon type="video-camera" />
-                    <span className="nav-text">nav 2</span>
+                    <Menu.Item key="/table">
+                        <Icon type="table" />
+                        <span className="nav-text">Table</span>
                     </Menu.Item>
-                    <Menu.Item key="3">
-                    <Icon type="upload" />
-                    <span className="nav-text">nav 3</span>
-                    </Menu.Item>
-                    <Menu.Item key="4">
-                    <Icon type="bar-chart" />
-                    <span className="nav-text">nav 4</span>
-                    </Menu.Item>
-                    <Menu.Item key="5">
-                    <Icon type="cloud-o" />
-                    <span className="nav-text">nav 5</span>
-                    </Menu.Item>
-                    <Menu.Item key="6">
-                    <Icon type="appstore-o" />
-                    <span className="nav-text">nav 6</span>
-                    </Menu.Item>
-                    <Menu.Item key="7">
-                    <Icon type="team" />
-                    <span className="nav-text">nav 7</span>
-                    </Menu.Item>
-                    <Menu.Item key="8">
-                    <Icon type="shop" />
-                    <span className="nav-text">nav 8</span>
+                    <Menu.Item key="/form">
+                        <Icon type="form" />
+                        <span className="nav-text">Form</span>
                     </Menu.Item>
                 </Menu>
             </Sider>

@@ -3,6 +3,7 @@ import { Layout } from 'antd'
 const { Content } = Layout;
 import { router as pageRouter, NotFound } from '../pages';
 import PageError from '../pages/subpages/PageError';
+import SubPageLoading from './SubPageLoading';
 
 import Loadable from 'react-loadable';
 
@@ -13,7 +14,7 @@ const s = require('./ContentContainer.scss');
 class PagePlaceHolder extends React.Component {
     render() {
         if (this.props.pastDelay && this.props.isLoading) {
-            return <div>Loading...</div>;
+            return <SubPageLoading />;
         }
         return null;
     }
@@ -23,7 +24,7 @@ const generateAsyncPage = (page, callBack) => {
     return Loadable({
         loader: () => {
             return new Promise((resolve, reject) => {
-                setTimeout((mod) => {
+                setTimeout(() => {
                     page.then(async (mod) => {
                         if (mod.default.preload) {
                             try {

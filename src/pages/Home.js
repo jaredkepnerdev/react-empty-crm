@@ -1,12 +1,13 @@
 import React from 'react';
 import { Layout } from 'antd';
+import EasyReact from '../utils/easy-react';
 import LeftSide from '../components/LeftSide';
 import AppHeader from '../components/AppHeader';
 import ContentContainer from '../components/ContentContainer';
 
-const s = require('../App.scss');
+const gs = require('../App.scss');
 
-class Home extends React.Component {
+class Home extends EasyReact.Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +15,7 @@ class Home extends React.Component {
             role: null,
             menu: null,
             err: false,
-            collapsed: false,
+            leftSideMenuCollapsed: false,
         };
     }
 
@@ -22,6 +23,8 @@ class Home extends React.Component {
         this.setState({
             role: Model.getUserRole(),
             menu: Model.getMenus()
+        }, () => {
+            this.bindData('ui.leftSideMenuCollapsed', 'leftSideMenuCollapsed');
         });
     }
     
@@ -29,23 +32,17 @@ class Home extends React.Component {
         super.componentWillUnmount();
     }
 
-    toggle() {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    }
-
     render() {
-        const { role, menu, err, collapsed } = this.state;
+        const { role, menu, err, leftSideMenuCollapsed } = this.state;
         if (!role || !menu) return null;
 
         if (err) return <h1>服务器发生了一些错误，请刷新页面重试。</h1>;
 
         return (
-            <Layout className={s.page}>
-                <LeftSide role={role} menu={menu} collapsed={collapsed} {...this.props} />
-                <Layout className={collapsed ? s.contentCollapsed : s.content}>
-                    <AppHeader role={role} collapsed={collapsed} {...this.props} toggle={this.toggle.bind(this)} />
+            <Layout className={gs.page}>
+                <LeftSide role={role} menu={menu} {...this.props} />
+                <Layout className={leftSideMenuCollapsed ? gs.contentExpaned : gs.contentCollapsed}>
+                    <AppHeader role={role} {...this.props} />
                     <ContentContainer role={role} {...this.props} url={window.location.pathname} />
                 </Layout>
             </Layout>

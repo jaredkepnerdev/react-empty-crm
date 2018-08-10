@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { init as pageMapInit, Home, Login, About, NotFound, NoPermission, SubPages, checkIsWhitelist } from './pages';
 import AuthRoute from './components/AuthRoute';
 import Model from './model/Model';
-import { callAPI } from './utils/service';
 import FullPageLoading from './components/FullPageLoading';
 
 import './App.scss';
@@ -13,24 +12,14 @@ global.__defineGetter__('Model', function () {
     return Model;
 });
 
-global.__defineGetter__('callAPI', function () {
-    return function(method, params, way, errorHandler) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let data = await callAPI(method, params, way);
-                resolve(data);
-            } catch (err) {
-                console.error('callAPI Error: ', err);
-                if (errorHandler) {
-                    errorHandler(err);
-                } else {
-                    toast(err.message, 0);
-                }
-                reject(err);
-            }
-        });
-    };
-});
+//register actions
+import EasyReact from './utils/easy-react';
+import * as actions from './actions';
+
+const DataComm = EasyReact.DataComm.sharedInstance;
+for (var key in actions) {
+    DataComm.registerAction(actions[key]);
+}
 
 class PagePlaceHolder extends React.Component {
     render() {

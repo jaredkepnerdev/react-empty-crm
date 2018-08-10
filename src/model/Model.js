@@ -1,6 +1,6 @@
 
 import { loadState, saveState } from '../utils/localStorage';
-import { callAPI, setAuth } from '../utils/service';
+import { callAPI, setAuth } from '../service';
 
 class User {
     constructor() {

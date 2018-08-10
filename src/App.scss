@@ -5,6 +5,9 @@ $color-primary: #1890ff;
 $border-default: 1px solid #ebedf0;
 $border-primary: 1px solid #1890ff;
 
+$left-side-expaned-width: 200px;
+$left-side-collapsed-width: 80px;
+
 %border-primary {
     border: $border-primary;
     border-radius: 2px;
@@ -15,16 +18,30 @@ $border-primary: 1px solid #1890ff;
     height: 100vh;
 }
 
-.content {
-    margin-left: 200px;
+.contentExpaned {
+    margin-left: $left-side-collapsed-width;
     transition: all 0.2s;
 }
 
 .contentCollapsed {
-    margin-left: 80px;
+    margin-left: $left-side-expaned-width;
     transition: all 0.2s;
 }
 
 .block {
     margin-bottom: 16px;
+}
+
+.pageFooterExpaned {
+    width: calc(100% - #{$left-side-expaned-width});
+    transition: all 0.2s;
+}
+
+.pageFooterCollapsed {
+    width: calc(100% - #{$left-side-collapsed-width});
+    transition: all 0.2s;
+}
+
+.formContent {
+    padding-bottom: 50px;
 }

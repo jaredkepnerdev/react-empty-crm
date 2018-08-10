@@ -5,7 +5,7 @@ import LeftSide from '../components/LeftSide';
 import AppHeader from '../components/AppHeader';
 import ContentContainer from '../components/ContentContainer';
 
-const s = require('../App.scss');
+const gs = require('../App.scss');
 
 class Home extends EasyReact.Component {
 
@@ -39,9 +39,9 @@ class Home extends EasyReact.Component {
         if (err) return <h1>服务器发生了一些错误，请刷新页面重试。</h1>;
 
         return (
-            <Layout className={s.page}>
+            <Layout className={gs.page}>
                 <LeftSide role={role} menu={menu} {...this.props} />
-                <Layout className={leftSideMenuCollapsed ? s.contentCollapsed : s.content}>
+                <Layout className={leftSideMenuCollapsed ? gs.contentExpaned : gs.contentCollapsed}>
                     <AppHeader role={role} {...this.props} />
                     <ContentContainer role={role} {...this.props} url={window.location.pathname} />
                 </Layout>

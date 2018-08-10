@@ -1,16 +1,13 @@
 import React from 'react';
+import EasyReact from '../../utils/easy-react';
 
-export default class BasePage extends React.Component {
+export default class BasePage extends EasyReact.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             
         };
-    }
-
-    componentDidMount() {
-
     }
 
     readLinkParams() {

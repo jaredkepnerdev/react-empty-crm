@@ -7,7 +7,7 @@ class DynamicComponent extends React.Component {
         let div = document.createElement('div');
         div.setAttribute('id', id);
         container = container || document.querySelector('body');
-        let component = <Component ref={onRef} hidden={false} domContainer={container} {...props} domID={id} />;
+        let component = <Component ref={onRef} visible={false} domContainer={container} {...props} domID={id} />;
         ReactDom.render(component, div);
         let dom = container.appendChild(div);
         return component;
@@ -16,14 +16,14 @@ class DynamicComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hidden: props.hidden ? true : false
+            visible: props.visible ? true : false
         };
     }
 
     doRemove() {
         if (this.removed) return;
         this.removed = true;
-        this.setState({ hidden:true });
+        this.setState({ visible:true });
         let check = () => {
             window['Timer_' + this.props.domID] = setTimeout(() => {
                 let ele = document.getElementById(this.props.domID);

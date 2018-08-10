@@ -32,11 +32,13 @@ class DemoFormPage extends BasePage {
 
     componentDidMount() {
         this.bindData('ui.leftSideMenuCollapsed', 'leftSideMenuCollapsed');
+        window.test = () => {
+            console.log(this.refs.form.getData());
+        }
     }
 
     render() {
         const { leftSideMenuCollapsed } = this.state;
-        console.log(leftSideMenuCollapsed);
         return (
             <div>
                 <div className={gs.formContent}>

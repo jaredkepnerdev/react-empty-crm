@@ -31,9 +31,11 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2017', 'react', 'stage-2'],
+                    presets: ['@babel/preset-env', '@babel/preset-react'],
                     plugins: [
-                        ['import', { libraryName: 'antd', libraryDirectory: "es", style: "css" }]
+                        ['import', { libraryName: 'antd', libraryDirectory: "es", style: "css" }],
+                        '@babel/syntax-dynamic-import',
+                        '@babel/plugin-proposal-class-properties'
                     ]
                 }
             },

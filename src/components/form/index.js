@@ -11,7 +11,7 @@ import Switch from './Switch';
 import Choice from './Choice';
 import CheckBox from './CheckBox';
 import Button from './Button';
-import DateInput from './DateInput';
+// import DateInput from './DateInput';
 
 import AsyncElementWrapper from './AsyncElementWrapper';
 import { FormValidator, Limit } from '../../utils/validator';
@@ -210,5 +210,5 @@ export {
     Choice,
     CheckBox,
     Button,
-    DateInput
+    // DateInput
 };

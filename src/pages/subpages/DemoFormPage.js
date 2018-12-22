@@ -10,10 +10,11 @@ import {
     Button as FormButton, 
     Switch,
     Select,
-    DateInput,
+    // DateInput,
     Choice,
     CheckBox,
 } from "../../components/form";
+import DateInput from "../../components/form/DateInput";
 
 import { Uploader, ImageUploader } from "../../components/upload";
 

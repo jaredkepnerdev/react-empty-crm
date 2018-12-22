@@ -8,6 +8,8 @@ const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const consts = require('./consts');
 
 // common.entry.vendor.push(path.resolve(consts.paths.src_static, 'config/localdev/setting.js'));
@@ -23,6 +25,9 @@ module.exports = merge(common, {
             path.join(consts.paths.src, 'main.js'),   //entry file
         ]
     },
+    plugins: [
+        new BundleAnalyzerPlugin()
+    ],
     devServer: {
         port: 9090,
         contentBase: consts.paths.src,

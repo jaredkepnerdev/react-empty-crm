@@ -196,27 +196,6 @@ function parseUrlQueryString(){
     return vars;
 }
 
-function $getCookie(key) {
-    var opt = { };
-    if (window.COOKIE_PATH) opt.path = window.COOKIE_PATH;
-    return $.cookie(key, undefined, opt);
-}
-
-function $setCookie(key, val, expire) {
-    var opt = { };
-    if (window.COOKIE_PATH) opt.path = window.COOKIE_PATH;
-    if (Number(expire) > 0) {
-        opt.expires = expire;
-    }
-    $.cookie(key, val, opt);
-}
-
-function $delCookie(key) {
-    var opt = { };
-    if (window.COOKIE_PATH) opt.path = window.COOKIE_PATH;
-    $.removeCookie(key, opt);
-}
-
 function $callAPILazy(method, data, onSuccess, onError, delay) {
     setTimeout(function() {
         $callAPI(method, data, onSuccess, onError);

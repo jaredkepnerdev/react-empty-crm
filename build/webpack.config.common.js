@@ -11,7 +11,11 @@ const consts = require('./consts');
 module.exports = {
     entry: {
         vendor: [
-            'babel-polyfill', 'react', 'react-loadable', 'react-router-dom',
+            'babel-polyfill', 'react', 'react-loadable', 'react-router-dom', 
+            path.resolve(consts.paths.src, 'components/antd/Icon'), 
+            path.resolve(consts.paths.src, 'components/antd/Row'), 
+            path.resolve(consts.paths.src, 'components/antd/Col'),
+            path.resolve(consts.paths.src, 'components/antd/Form'),
             path.resolve(consts.paths.src, 'components/DynamicComponent'),
         ]
     },

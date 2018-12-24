@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button as AntdButton } from 'antd';
+import AntdButton from '../antd/Button';
 
 class Button extends React.Component {
     constructor(props) {

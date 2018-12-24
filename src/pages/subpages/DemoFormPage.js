@@ -5,20 +5,15 @@ import PageFooter from '../../components/PageFooter';
 import { 
     Form, FormGroup, 
     AsyncElementWrapper,
-    TextInput, 
-    NumberInput,
-    Button as FormButton, 
-    Switch,
-    Select,
-    // DateInput,
-    Choice,
-    CheckBox,
 } from "../../components/form";
 import DateInput from "../../components/form/DateInput";
+import TextInput from "../../components/form/TextInput";
+import NumberInput from "../../components/form/NumberInput";
+import Choice from "../../components/form/Choice";
+import Switch from "../../components/form/Switch";
+import CheckBox from "../../components/form/CheckBox";
 
 import { Uploader, ImageUploader } from "../../components/upload";
-
-import { mockFetchTableData } from "../../service";
 
 const gs = require('../../App.scss');
 
@@ -33,9 +28,6 @@ class DemoFormPage extends BasePage {
 
     componentDidMount() {
         this.bindData('ui.leftSideMenuCollapsed', 'leftSideMenuCollapsed');
-        window.test = () => {
-            console.log(this.refs.form.getData());
-        }
     }
 
     render() {

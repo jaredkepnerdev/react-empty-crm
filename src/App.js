@@ -5,8 +5,11 @@ import { init as pageMapInit, Home, Login, About, NotFound, NoPermission, SubPag
 import AuthRoute from './components/AuthRoute';
 import Model from './model/Model';
 import FullPageLoading from './components/FullPageLoading';
+import dependency from './dependency';
 
 import './App.scss';
+
+global.dependency = {};
 
 global.__defineGetter__('Model', function () {
     return Model;
@@ -81,6 +84,23 @@ class RootApp extends React.Component {
                 //2. load module
                 try {
                     let mod = await page();
+                    if (mod.default.dependency && mod.default.dependency.length > 0) {
+                        let libs = {};
+                        for (let i = 0; i < mod.default.dependency.length; i++) {
+                            let dname = mod.default.dependency[i];
+                            let dfunc = dependency[dname];
+                            if (dfunc) {
+                                let d = await dfunc();
+                                if (d.__esModule && d.default) {
+                                    d = d.default;
+                                }
+                                console.log(dname);
+                                libs[dname] = d;
+                                global.dependency[dname] = d;
+                            }
+                        }
+                        mod.default.dependency = libs;
+                    }
                     if (mod.default.preload) {
                         await mod.default.preload();
                     }

@@ -1,10 +1,12 @@
 import React from 'react';
-import { Row, Col, Icon } from 'antd';
+import Icon from "../components/antd/Icon";
+import Row from "../components/antd/Row";
+import Col from "../components/antd/Col";
 import { 
     Form, FormGroup, 
-    TextInput, 
-    Button, 
 } from "../components/form";
+import Button from "../components/form/Button";
+import TextInput from "../components/form/TextInput";
 
 const logo = require('../static/img/logo.png');
 

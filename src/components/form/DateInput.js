@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseFormElement from './BaseFormElement';
-import { DatePicker as AntdDatePicker } from 'antd';
+import AntdDatePicker from '../antd/DatePicker';
 
 class DateInput extends BaseFormElement {
     constructor(props) {

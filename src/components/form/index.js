@@ -1,20 +1,13 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-import { Form as AntdForm, Row, Col } from 'antd';
+import AntdForm from "../antd/Form";
+import Row from "../antd/Row";
+import Col from "../antd/Col";
 import classNames from 'classnames';
 import BaseFormElement from './BaseFormElement';
 import FormStore from './FormStore';
-import TextInput from './TextInput';
-import NumberInput from './NumberInput';
-import Select from './Select';
-import Switch from './Switch';
-import Choice from './Choice';
-import CheckBox from './CheckBox';
-import Button from './Button';
-// import DateInput from './DateInput';
 
 import AsyncElementWrapper from './AsyncElementWrapper';
-import { FormValidator, Limit } from '../../utils/validator';
+import { FormValidator } from '../../utils/validator';
 
 class Form extends React.Component {
     constructor(props) {
@@ -203,12 +196,4 @@ export {
     FormGroupColumn,
     FormCell,
     AsyncElementWrapper,
-    TextInput,
-    NumberInput,
-    Select,
-    Switch,
-    Choice,
-    CheckBox,
-    Button,
-    // DateInput
 };

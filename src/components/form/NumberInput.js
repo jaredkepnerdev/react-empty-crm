@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseFormElement from './BaseFormElement';
-import { InputNumber } from 'antd';
+import Input from '../antd/Input';
 
 class NumberInput extends BaseFormElement {
     constructor(props) {

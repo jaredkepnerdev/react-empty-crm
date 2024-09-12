@@ -27,15 +27,13 @@ export const callAPI = (method, params) => {
             });
 
             let err;
-
             if (res.status !== 200) {
-                err = new Error("网络连接似乎出现了问题, 请重新尝试.");
+                err = new Error("There seems to be a problem with the network connection, please try again.");
                 err.code = code;
                 return reject(err);
             }
-
             if (res.code === 401 || res === 'Unauthorized') {
-                err = new Error('没有权限访问相关资源.');
+                err = new Error('No permission to access the relevant resources.');
                 err.code = 0;
                 return reject(err);
             }
